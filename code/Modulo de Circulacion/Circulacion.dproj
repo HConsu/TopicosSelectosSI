@@ -1,0 +1,391 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{827BF12C-9D80-4C2F-9828-D405B4C697DA}</ProjectGuid>
+			<MainSource>Circulacion.dpr</MainSource>
+			<Base>True</Base>
+			<Config Condition="'$(Config)'==''">Debug</Config>
+			<Platform>Win32</Platform>
+			<AppType>Application</AppType>
+			<FrameworkType>VCL</FrameworkType>
+			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+			<ProjectVersion>12.3</ProjectVersion>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+			<Cfg_1>true</Cfg_1>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+			<Cfg_2>true</Cfg_2>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base)'!=''">
+			<DCC_UsePackage>vcl;vclx;VclSmp;rtl;vclimg;svnui;svn;bdertl;TeeUI;TeeDB;Tee;vclactnband;vcldb;dbrtl;vcldbx;vcltouch;xmlrtl;dsnap;dsnapcon;vclib;ibxpress;adortl;IndyCore;IndySystem;IndyProtocols;inet;intrawebdb_110_150;Intraweb_110_150;vclie;websnap;webdsnap;inetdb;inetdbbde;inetdbxpress;soaprtl;vclribbon;dbexpress;DbxCommonDriver;DataSnapIndy10ServerTransport;DataSnapProviderClient;DbxClientDriver;DataSnapClient;dbxcds;DataSnapServer;AzureCloud;DBXInterBaseDriver;DBXMySQLDriver;DBXFirebirdDriver;DBXSybaseASEDriver;DBXSybaseASADriver;DBXOracleDriver;DBXMSSQLDriver;DBXInformixDriver;DBXDb2Driver;Mneyedit;CodeSiteExpressVcl;Rave90VCL;QR5RunDXE;ZParseSql;ZComponent;ZDbc;ZPlain;ZCore;dclOffice2k</DCC_UsePackage>
+			<DCC_SymbolReferenceInfo>1</DCC_SymbolReferenceInfo>
+			<DCC_E>false</DCC_E>
+			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;WinTypes=Windows;WinProcs=Windows;$(DCC_UnitAlias)</DCC_UnitAlias>
+			<DCC_ImageBase>00400000</DCC_ImageBase>
+			<DCC_N>true</DCC_N>
+			<DCC_S>false</DCC_S>
+			<DCC_F>false</DCC_F>
+			<DCC_K>false</DCC_K>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_1)'!=''">
+			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+			<DCC_DebugInformation>false</DCC_DebugInformation>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_2)'!=''">
+			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+			<DCC_Optimize>false</DCC_Optimize>
+			<DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
+		</PropertyGroup>
+		<ItemGroup>
+			<DelphiCompile Include="Circulacion.dpr">
+				<MainSource>MainSource</MainSource>
+			</DelphiCompile>
+			<DCCReference Include="Fprincipal.pas">
+				<Form>FPrincipalCirculacion</Form>
+			</DCCReference>
+			<DCCReference Include="Acerca_de_Subs.pas">
+				<Form>FAcercade</Form>
+			</DCCReference>
+			<DCCReference Include="FCCatalogo_de_edificios.pas">
+				<Form>FCEdificios</Form>
+			</DCCReference>
+			<DCCReference Include="FC_Catalogo_de_rutas_metropolitanas.pas">
+				<Form>FC_rutas_metropolitanas</Form>
+			</DCCReference>
+			<DCCReference Include="FC_Catalogo_de_rutas_foraneas.pas">
+				<Form>FC_Rutas_foraneas</Form>
+			</DCCReference>
+			<DCCReference Include="FC_Catalogo_de_repartidores_y_choferes.pas">
+				<Form>FC_Catalogo_repartidores_choferes</Form>
+			</DCCReference>
+			<DCCReference Include="FC_Catalogo_de_proveedores_vendedores.pas">
+				<Form>FC_Catalogo_proveedores_y_vendedores</Form>
+			</DCCReference>
+			<DCCReference Include="F_Buscar_Proveedor.pas">
+				<Form>FBuscar_proveedor</Form>
+			</DCCReference>
+			<DCCReference Include="FC_Tipo_de_circulacion.pas">
+				<Form>FCTipo_Circulacion</Form>
+			</DCCReference>
+			<DCCReference Include="FR_Proveedores_dotacion.pas">
+				<Form>FR_Proveedoresdotacion</Form>
+			</DCCReference>
+			<DCCReference Include="FAdministracion_rutas.pas">
+				<Form>FAdmon_rutas</Form>
+			</DCCReference>
+			<DCCReference Include="FRemision_ruta.pas">
+				<Form>FRemision</Form>
+			</DCCReference>
+			<DCCReference Include="FR_Imprimeremision.pas">
+				<Form>FR_Imprime_remision</Form>
+			</DCCReference>
+			<DCCReference Include="FC_Municipios_con_entrega.pas">
+				<Form>FCMunicipiosconentrega</Form>
+			</DCCReference>
+			<DCCReference Include="FAlta_de_queja.pas">
+				<Form>FAltaQueja</Form>
+			</DCCReference>
+			<DCCReference Include="FSeguimiento_Quejas.pas">
+				<Form>FSeguimientoQ</Form>
+			</DCCReference>
+			<DCCReference Include="FR_Reporte_seguimiento_queja.pas">
+				<Form>FR_RepSegQueja</Form>
+			</DCCReference>
+			<DCCReference Include="FR_Reporte_de_quejas.pas">
+				<Form>FR_reportequejas</Form>
+			</DCCReference>
+			<DCCReference Include="FCaptura_Pagos.pas">
+				<Form>FCapturaPagos</Form>
+			</DCCReference>
+			<DCCReference Include="FBuscar_codigo_vendedor.pas">
+				<Form>Fbuscarcodigo</Form>
+			</DCCReference>
+			<DCCReference Include="FCaptura_devoluciones.pas">
+				<Form>Fdevoluciones</Form>
+			</DCCReference>
+			<DCCReference Include="FCaptura_pagos_x_distribuidor.pas">
+				<Form>FCapturaXdistribuidor</Form>
+			</DCCReference>
+			<DCCReference Include="FREstado_de_Cuenta.pas">
+				<Form>FREstadoCuenta</Form>
+			</DCCReference>
+			<DCCReference Include="FR_reporte_edo_cuenta_imp.pas">
+				<Form>FR_Edo_cuenta</Form>
+			</DCCReference>
+			<DCCReference Include="FCorte_circulacion.pas">
+				<Form>Fcorte</Form>
+			</DCCReference>
+			<DCCReference Include="FR_Hoja_Corte.pas">
+				<Form>FR_HojaCorte</Form>
+			</DCCReference>
+			<DCCReference Include="FRImprime_Poliza.pas">
+				<Form>FRImprimePoliza</Form>
+			</DCCReference>
+			<DCCReference Include="FAutorizacion.pas">
+				<Form>FPassword</Form>
+			</DCCReference>
+			<DCCReference Include="FC_Vendedores_zocalo.pas">
+				<Form>FCVendedoresZocalo</Form>
+			</DCCReference>
+			<DCCReference Include="FCaptura_pagos_zocalo.pas">
+				<Form>FCapturaZocalo</Form>
+			</DCCReference>
+			<DCCReference Include="FC_Dotacion_total.pas">
+				<Form>FCTotal_dotacion</Form>
+			</DCCReference>
+			<DCCReference Include="FCorte_Zocalo.pas">
+				<Form>Fcortezocalo</Form>
+			</DCCReference>
+			<DCCReference Include="FRHojadeModifiacionRuta.pas">
+				<Form>Fhoja_modif_ruta</Form>
+			</DCCReference>
+			<DCCReference Include="Subscripciones\F_BuscarCP.pas">
+				<Form>FbuscarCP</Form>
+			</DCCReference>
+			<DCCReference Include="Subscripciones\F_Modificar_Subscripcion.pas">
+				<Form>FModificar_Subscripcion</Form>
+			</DCCReference>
+			<DCCReference Include="Subscripciones\FAlta_de_subscriptor.pas">
+				<Form>FAlta_subscriptor</Form>
+			</DCCReference>
+			<DCCReference Include="Subscripciones\FAlta_Subscripciones.pas">
+				<Form>FSubscripciones</Form>
+			</DCCReference>
+			<DCCReference Include="Subscripciones\FAreas_de_entrega_en_edificio.pas">
+				<Form>FAreas_entrega_edificio</Form>
+			</DCCReference>
+			<DCCReference Include="Subscripciones\FAsignar_a_ruta_metropolitana.pas">
+				<Form>FAsignarARutaMetro</Form>
+			</DCCReference>
+			<DCCReference Include="Subscripciones\FCancelar_subscripcion.pas">
+				<Form>FCancelaciones</Form>
+			</DCCReference>
+			<DCCReference Include="Subscripciones\FModificar_subscriptor.pas">
+				<Form>FModif_subscriptor</Form>
+			</DCCReference>
+			<DCCReference Include="Subscripciones\FNueva_Area_Edificio.pas">
+				<Form>FNueva_area_de_edifcio</Form>
+			</DCCReference>
+			<DCCReference Include="Subscripciones\FNuevaSubscripcion.pas">
+				<Form>FNueva_Subscripcion</Form>
+			</DCCReference>
+			<DCCReference Include="FC_Codigos_postales.pas">
+				<Form>FC_CP</Form>
+			</DCCReference>
+			<DCCReference Include="Subscripciones\FCambioNoFactura.pas">
+				<Form>FCambio_Factura</Form>
+			</DCCReference>
+			<DCCReference Include="FCambio_Subscriptor.pas">
+				<Form>FCambioSubscriptor</Form>
+			</DCCReference>
+			<DCCReference Include="FR_Alta_Subscripcion.pas">
+				<Form>FRAltaSubscripcion</Form>
+			</DCCReference>
+			<DCCReference Include="FImpCodigoBarras.pas">
+				<Form>FImpCodigo</Form>
+			</DCCReference>
+			<DCCReference Include="FImpHojasRuta.pas">
+				<Form>Fimprimirrutas</Form>
+			</DCCReference>
+			<DCCReference Include="FR_Imprime_rutas_metro.pas">
+				<Form>Form1</Form>
+			</DCCReference>
+			<DCCReference Include="FQuejas_Cerradas.pas">
+				<Form>FQuejasCerradas</Form>
+			</DCCReference>
+			<DCCReference Include="Subscripciones\FQuejas_Subscripciones.pas">
+				<Form>FQuejasSubscripciones</Form>
+			</DCCReference>
+			<DCCReference Include="Subscripciones\FQuejasReporte.pas">
+				<Form>FQuejasR</Form>
+			</DCCReference>
+			<DCCReference Include="Subscripciones\FHistorial_Quejas.pas">
+				<Form>FHistorialQueja</Form>
+			</DCCReference>
+			<DCCReference Include="FCanceladas_en_ruta.pas">
+				<Form>FCanceladasR</Form>
+			</DCCReference>
+			<DCCReference Include="FNuevas_enRuta.pas">
+				<Form>FNuevosR</Form>
+			</DCCReference>
+			<DCCReference Include="FAdmon_codigos.pas">
+				<Form>FAdmonCodigos</Form>
+			</DCCReference>
+			<DCCReference Include="FEstadisticas_rutas.pas">
+				<Form>FEstadisticasRutas</Form>
+			</DCCReference>
+			<DCCReference Include="FSuspender_Entrega.pas">
+				<Form>FSuspenderEntrega</Form>
+			</DCCReference>
+			<DCCReference Include="FInicidencias_ruta.pas">
+				<Form>FIncidencias</Form>
+			</DCCReference>
+			<DCCReference Include="FOrden_Entrega.pas">
+				<Form>FOrdenEntrega</Form>
+			</DCCReference>
+			<DCCReference Include="Supervisor\FSeguimientoAltas.pas">
+				<Form>FSeguimientoA</Form>
+			</DCCReference>
+			<DCCReference Include="Supervisor\FSeguimientoCancelados.pas">
+				<Form>FCancelados</Form>
+			</DCCReference>
+			<DCCReference Include="Supervisor\FNotasSubscripcion.pas">
+				<Form>FNotas</Form>
+			</DCCReference>
+			<DCCReference Include="Supervisor\FverNotas.pas">
+				<Form>Fver</Form>
+			</DCCReference>
+			<DCCReference Include="Subscripciones\FR_Notificacion_alta.pas">
+				<Form>FRNotificacionalta</Form>
+			</DCCReference>
+			<DCCReference Include="Supervisor\FBuscar_Supervisor.pas">
+				<Form>FBuscarSupervisor</Form>
+			</DCCReference>
+			<DCCReference Include="FR_lista_ruta.pas">
+				<Form>FRHojadeRuta</Form>
+			</DCCReference>
+			<DCCReference Include="FR_lista_edificio.pas">
+				<Form>FRlistaedificio</Form>
+			</DCCReference>
+			<DCCReference Include="FR_lista_rutac.pas">
+				<Form>FRListaCancelados</Form>
+			</DCCReference>
+			<DCCReference Include="FAsignar_C_Edificio.pas">
+				<Form>FAsignarCEdificio</Form>
+			</DCCReference>
+			<DCCReference Include="FNuevo_codigo.pas">
+				<Form>FNuevoCodigo</Form>
+			</DCCReference>
+			<DCCReference Include="FAgrupar_codigos.pas">
+				<Form>FAgruparCodigos</Form>
+			</DCCReference>
+			<DCCReference Include="FSeguimiento_Cambios.pas">
+				<Form>FSeguimientoCambios</Form>
+			</DCCReference>
+			<DCCReference Include="F_Incidencias_descripcion.pas">
+				<Form>FIncidenciasDescripcion</Form>
+			</DCCReference>
+			<DCCReference Include="FIncidencia_global_circulacion.pas">
+				<Form>FIncidenciaGlobal</Form>
+			</DCCReference>
+			<DCCReference Include="FLoginpass.pas">
+				<Form>Flogin</Form>
+			</DCCReference>
+			<DCCReference Include="Supervisor\FFCodigos_Agrupados.pas">
+				<Form>FGrupos_codigos</Form>
+			</DCCReference>
+			<DCCReference Include="Supervisor\FC_Lista_correos.pas">
+				<Form>FListaCorreos</Form>
+			</DCCReference>
+			<DCCReference Include="Fadmon_DotaRuta.pas">
+				<Form>FChoferDot</Form>
+			</DCCReference>
+			<DCCReference Include="FReporteRemisionesRutas.pas">
+				<Form>FRemisionRutas</Form>
+			</DCCReference>
+			<DCCReference Include="Subscripciones\FHistorial_entrega.pas">
+				<Form>FHistorialEntrega</Form>
+			</DCCReference>
+			<DCCReference Include="FAdmonCodigosVendedores.pas">
+				<Form>FCod_vendedores</Form>
+			</DCCReference>
+			<DCCReference Include="FEntregaRutaVenta.pas">
+				<Form>FEntregaRutaVentas</Form>
+			</DCCReference>
+			<DCCReference Include="FNotificarEntrega.pas">
+				<Form>FactivarEntrega</Form>
+			</DCCReference>
+			<DCCReference Include="FEstadisticas_rutas_ventas.pas">
+				<Form>FestadisticasVEntas</Form>
+			</DCCReference>
+			<DCCReference Include="Forden_Entrega_ventas.pas">
+				<Form>FOrdenEntregaVentas</Form>
+			</DCCReference>
+			<DCCReference Include="FDescripcion_Incidente_Entrega.pas">
+				<Form>FDescripcionIncidente</Form>
+			</DCCReference>
+			<DCCReference Include="Subscripciones\FComentarios_quejas.pas">
+				<Form>FcomentariosQuejas</Form>
+			</DCCReference>
+			<DCCReference Include="FCerra_ConActa.pas">
+				<Form>FCierreConActa</Form>
+			</DCCReference>
+			<DCCReference Include="Subscripciones\FReactivar_suscripcion.pas">
+				<Form>FReactivar</Form>
+			</DCCReference>
+			<DCCReference Include="FInfo_Proveedor.pas">
+				<Form>FInfoProveedor</Form>
+			</DCCReference>
+			<DCCReference Include="FEntregaRuta.pas">
+				<Form>FEntregadeRuta</Form>
+			</DCCReference>
+			<BuildConfiguration Include="Debug">
+				<Key>Cfg_2</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Base">
+				<Key>Base</Key>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Release">
+				<Key>Cfg_1</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+		</ItemGroup>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
+		<Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
+		<ProjectExtensions>
+			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
+			<Borland.ProjectType>VCLApplication</Borland.ProjectType>
+			<BorlandProject>
+				<Delphi.Personality>
+					<Source>
+						<Source Name="MainSource">Circulacion.dpr</Source>
+					</Source>
+					<VersionInfo>
+						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
+						<VersionInfo Name="MajorVer">2</VersionInfo>
+						<VersionInfo Name="MinorVer">5</VersionInfo>
+						<VersionInfo Name="Release">0</VersionInfo>
+						<VersionInfo Name="Build">0</VersionInfo>
+						<VersionInfo Name="Debug">False</VersionInfo>
+						<VersionInfo Name="PreRelease">False</VersionInfo>
+						<VersionInfo Name="Special">False</VersionInfo>
+						<VersionInfo Name="Private">False</VersionInfo>
+						<VersionInfo Name="DLL">False</VersionInfo>
+						<VersionInfo Name="Locale">2058</VersionInfo>
+						<VersionInfo Name="CodePage">1252</VersionInfo>
+					</VersionInfo>
+					<VersionInfoKeys>
+						<VersionInfoKeys Name="CompanyName"/>
+						<VersionInfoKeys Name="FileDescription"/>
+						<VersionInfoKeys Name="FileVersion">2.5.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="InternalName"/>
+						<VersionInfoKeys Name="LegalCopyright"/>
+						<VersionInfoKeys Name="LegalTrademarks"/>
+						<VersionInfoKeys Name="OriginalFilename"/>
+						<VersionInfoKeys Name="ProductName"/>
+						<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="Comments"/>
+					</VersionInfoKeys>
+					<Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\dclofficexp150.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+					</Excluded_Packages>
+				</Delphi.Personality>
+				<Platforms>
+					<Platform value="Win32">True</Platform>
+				</Platforms>
+				<ModelSupport>False</ModelSupport>
+			</BorlandProject>
+			<ProjectFileVersion>12</ProjectFileVersion>
+		</ProjectExtensions>
+	</Project>

@@ -1,0 +1,64 @@
+unit FNotasSubscripcion;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, StdCtrls;
+
+type
+  TFNotas = class(TForm)
+    ZQnota: TZQuery;
+    Label1: TLabel;
+    nosubscripcion: TLabel;
+    nota: TMemo;
+    Button1: TButton;
+    Button2: TButton;
+    ZQbitacora: TZQuery;
+    procedure FormShow(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FNotas: TFNotas;
+
+implementation
+
+{$R *.dfm}
+Uses
+FPrincipalSupervisor,FSeguimientoAltas;
+
+procedure TFNotas.Button1Click(Sender: TObject);
+begin
+  {--------------Bitacora------------------------}
+  ZQBitacora.Close;
+  ZQBitacora.SQL.Clear;
+  ZQbitacora.SQL.Add('Insert into b_supervisor_circulacion (descripcion) VALUES ("Se agrego una nota a la subscripcion '+nosubscripcion.Caption+'")');
+  ZQbitacora.ExecSQL;
+  {---------------Bitacora--------------------------}
+
+  ZQnota.Close;
+  ZQNota.SQL.Clear;
+  ZQNota.SQL.Add('Insert into t_notas_subscripciones(Nosubscripcion,Nota) VALUES('+nosubscripcion.Caption+',"'+nota.Text+'")');
+  ZQNota.ExecSQL;
+  FNotas.Close;
+end;
+
+procedure TFNotas.Button2Click(Sender: TObject);
+begin
+   Fnotas.Close;
+end;
+
+procedure TFNotas.FormShow(Sender: TObject);
+begin
+   nota.Text:='';
+   nosubscripcion.Caption:= FSeguimientoA.gridsubs.Fields[0].AsString;
+
+end;
+
+end.

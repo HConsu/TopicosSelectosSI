@@ -1,0 +1,421 @@
+unit FNuevaSubscripcion;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ComCtrls, DBCtrls, DB, ZAbstractRODataset,
+  ZAbstractDataset, ZDataset, jpeg, ExtCtrls;
+
+type
+  TFNueva_Subscripcion = class(TForm)
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Lobservaciones: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Linconsistencias: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label17: TLabel;
+    Label18: TLabel;
+    Fecha_alta: TEdit;
+    NoSubscripcion: TEdit;
+    atenciona: TEdit;
+    combo_tiposub: TDBLookupComboBox;
+    combo_edificio: TDBLookupComboBox;
+    Telefono: TEdit;
+    fecha_inicio: TDateTimePicker;
+    fecha_fin: TDateTimePicker;
+    calle: TEdit;
+    cp: TEdit;
+    ciudad: TEdit;
+    descripcion: TEdit;
+    observaciones: TEdit;
+    inconsistencias: TEdit;
+    NoSubscriptor: TEdit;
+    ZQTipo_subscripcion: TZQuery;
+    ZQEdificio: TZQuery;
+    ZQRuta: TZQuery;
+    DSTipoSubscripcion: TDataSource;
+    DSEdificio: TDataSource;
+    DSRuta: TDataSource;
+    Asignar: TButton;
+    Cancelar: TButton;
+    ZQAlta_subscripcion: TZQuery;
+    LabelCosto: TLabel;
+    Costo: TEdit;
+    ZQRCosto: TZReadOnlyQuery;
+    EnEdificio: TCheckBox;
+    areas: TButton;
+    ZQNoSub: TZQuery;
+    Image1: TImage;
+    ZQcolonia: TZQuery;
+    DScolonia: TDataSource;
+    LEmail: TLabel;
+    email: TEdit;
+    Buscar: TButton;
+    colonia: TEdit;
+    Button1: TButton;
+    ruta: TDBLookupComboBox;
+    Label5: TLabel;
+    formapago: TComboBox;
+    procedure CancelarClick(Sender: TObject);
+    procedure AsignarClick(Sender: TObject);
+    procedure combo_tiposubClick(Sender: TObject);
+    procedure EnEdificioClick(Sender: TObject);
+    procedure areasClick(Sender: TObject);
+    procedure fecha_inicioChange(Sender: TObject);
+    procedure TelefonoKeyPress(Sender: TObject; var Key: Char);
+    procedure atencionaKeyPress(Sender: TObject; var Key: Char);
+    procedure cpKeyPress(Sender: TObject; var Key: Char);
+    procedure FormShow(Sender: TObject);
+    procedure cpExit(Sender: TObject);
+    procedure BuscarClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    duracionsubs:integer;
+    numerodesubscripcion:string;
+    numerodeedificio:string;
+    {Callepublic:String;
+    Coloniapublic:string;
+    CPpublic:String;
+    Ciudadpublic:string;
+    Descripcionpublic:String;}
+
+
+    { Public declarations }
+  end;
+
+var
+  FNueva_Subscripcion: TFNueva_Subscripcion;
+
+implementation
+
+Uses FAlta_Subscripciones, FAreas_de_entrega_en_edificio,
+  FAsignar_a_ruta_metropolitana,Fprincipal,F_BuscarCP;
+{$R *.dfm}
+
+procedure TFNueva_Subscripcion.areasClick(Sender: TObject);
+begin
+  {para poder ordenar o agregar datos de la ruta en edificios primero insertamos los datos de la subscripcion en la BD}
+  {Verificamos que los campos no vaya vacios}
+  if NoSubscriptor.Text = '' then
+   begin
+     ShowMessage('El numero de subscriptor no puede estar vacio');
+   end;
+  if NoSubscripcion.Text = '' then
+   begin
+     ShowMessage('El número de subscripción no puede estar vacio');
+   end;
+  if Combo_tiposub.KeyValue = NULL then
+   begin
+     ShowMessage('Seleccione el tipo de subscripción');
+   end;
+  if EnEdificio.Checked = TRUE then
+   begin
+      if combo_edificio.KeyValue = 0 then
+       Begin
+        ShowMessage('Seleccione el edificio de entrega');
+       End;
+   end;
+  if atenciona.Text = '' then
+   begin
+     ShowMessage('Indique en atención a quien estará la subscripción');
+   end;
+  if telefono.Text = '' then
+   begin
+     ShowMessage('Indique el teléfono del subscriptor, sino tiene introduzca un 0 ');
+   end;
+       if application.MessageBox (pchar('Esta accion dara de alta la subscripción, ¿desea continuar?'), pchar('Confirmar alta'), (MB_YESNO + MB_ICONQUESTION)) = IDYES then
+           begin
+            if ((NoSubscriptor.Text <> '') AND (NoSubscripcion.Text <> '') AND (Combo_tiposub.KeyValue <> NULL) AND (atenciona.Text <> '') AND (telefono.Text <> '') AND (combo_edificio.KeyValue <> NULL)) then
+              begin
+              numerodeedificio := FloatToStr(combo_edificio.KeyValue);
+              //ShowMessage('Edificio '+numerodeedificio);
+              numerodesubscripcion := NoSubscripcion.Text;
+              ZQAlta_subscripcion.Close;
+              ZQAlta_subscripcion.SQL.Clear;
+              ZQAlta_subscripcion.SQL.Add('Insert into t_subscripcion (NoSubscriptor,AtencionA,Edificio,Fecha_alta,Fecha_inicio,fecha_fin,telefono,Tipo_Subscripcion,Costo,formadepago) VALUES ('+Nosubscriptor.Text+',"'+AtencionA.Text+'",'+FloatToStr(combo_edificio.KeyValue)+',"'+fecha_alta.Text+'","'+DateToStr(fecha_inicio.Date)+'","'+DateToStr(fecha_fin.Date)+'","'+telefono.Text+'",'+FloatToStr(combo_tiposub.KeyValue)+','+costo.text+',"'+formapago.Text+'")');
+              ZQAlta_subscripcion.ExecSQL;
+              {Actualizamos el estatus del subscriptor}
+              ZQAlta_subscripcion.Close;
+              ZQAlta_subscripcion.SQL.Clear;
+              ZQAlta_subscripcion.SQL.Add('Update t_cliente_subscriptor SET Estatus ="Activo" Where id_subscriptor='+Nosubscriptor.Text);
+              ZQAlta_subscripcion.ExecSQL;
+              {fin de actualizacion de estatus del subscriptor}
+              Asignar.Enabled := FALSE;
+              FPrincipalCirculacion.quienllamaareadeentrega:=1;
+              FAreas_entrega_edificio.Enabled := FALSE;
+              FAreas_entrega_edificio := TFAreas_entrega_edificio.Create(self);
+              FAreas_entrega_edificio.ShowModal;
+              end
+              else begin
+                 ShowMessage('Error, Verifique que no falten datos.');
+              end;
+           end
+
+
+
+
+end;
+
+procedure TFNueva_Subscripcion.atencionaKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+ {Revisamos que en el campo atencion no se introduscan numeros}
+  if not (key in [' ','a'..'z','ñ','Ñ','A'..'Z', #7, #8, #13]) then
+   begin
+     Key := #0;
+     Beep;
+   end;
+end;
+
+procedure TFNueva_Subscripcion.BuscarClick(Sender: TObject);
+begin
+   FPrincipalCirculacion.quienllamacp:=2;
+   FbuscarCP.Enabled:=FALSE;
+   FbuscarCP:= TFbuscarCP.Create(Self);
+   FbuscarCP.ShowModal;
+end;
+
+procedure TFNueva_Subscripcion.Button1Click(Sender: TObject);
+begin
+   ZQNosub.Close;
+    ZQNoSub.SQL.Clear;
+    ZQNoSub.SQL.Add('Select * from t_cliente_subscriptor where id_subscriptor='+nosubscriptor.Text);
+    ZQNosub.ExecSQL;
+    ZQNoSub.Open;
+    atenciona.Text:=ZQNosub.FieldByName('titular').AsString;
+    calle.Text:=ZQNosub.FieldByName('calle').AsString;
+    cp.Text:=ZQNosub.FieldByName('cp').AsString;
+    colonia.Text:=ZQNosub.FieldByName('colonia').AsString;
+    ciudad.Text:=ZQNoSub.FieldByName('ciudad').AsString;
+
+end;
+
+procedure TFNueva_Subscripcion.CancelarClick(Sender: TObject);
+begin
+  FNueva_Subscripcion.Close;
+
+end;
+
+procedure TFNueva_Subscripcion.EnEdificioClick(Sender: TObject);
+begin
+{habilitamos y deshabilitamos los campos segun selecionemos si es edificio o no}
+ if enedificio.Checked = TRUE then
+    begin
+      combo_edificio.Enabled := TRUE;
+      calle.Enabled := FALSE;
+      calle.Text:='';
+      colonia.text:='';
+      cp.Enabled:=FALSE;
+      cp.Text:='';
+      Ciudad.Enabled:=FALSE;
+      ciudad.Text:='';
+      Descripcion.Enabled:=FALSE;
+      descripcion.Text:='';
+      areas.Visible :=TRUE;
+      asignar.Enabled:=FALSE;
+      Lobservaciones.Font.Style := [fsBold];
+      Linconsistencias.Font.Style := [fsBold];
+
+    end;
+ if enedificio.Checked = FALSE then
+    begin
+      combo_edificio.KeyValue := 0;
+      combo_edificio.Enabled := FALSE;
+      cp.Enabled:=TRUE;
+      Ciudad.Enabled:=TRUE;
+      Descripcion.Enabled:=TRUE;
+      areas.Visible:=FALSE;
+      Asignar.Enabled:=TRUE;
+      Lobservaciones.Font.Style := [];
+      Linconsistencias.Font.Style := [];
+    end;
+
+end;
+
+procedure TFNueva_Subscripcion.fecha_inicioChange(Sender: TObject);
+begin
+  Fecha_fin.Date := Fecha_inicio.Date + Duracionsubs;
+end;
+
+procedure TFNueva_Subscripcion.FormShow(Sender: TObject);
+begin
+  {Establecemos la fecha de captura a la fechan de hoy y obtenemos el numero de susbcriptor
+  de la variable publica en FSubscripciones}
+  fecha_inicio.Date:=now()+3;
+  fecha_alta.Text := DateToStr(now);
+  Nosubscriptor.Text:=FSubscripciones.no_de_subscriptor_public;
+  ZQNoSub.SQL.Clear;
+  ZQNoSub.SQL.Add('Select MAX(NoSubscripcion +1) AS No from t_subscripcion');
+  ZQNoSub.ExecSQL;
+  ZQNoSub.Open;
+  Nosubscripcion.Text := ZQNoSub.FieldByName('No').AsString;
+  combo_edificio.KeyValue := 0;
+  ZQNoSub.Close;
+  ZQNoSub.SQL.Clear;
+  ZQNoSub.SQL.Add('Select * from t_cliente_subscriptor where id_subscriptor='+Nosubscriptor.Text);
+  ZQNoSub.ExecSQL;
+  ZQNoSub.Open;
+  calle.Text:=ZQNoSub.FieldByName('calle').AsString;
+  colonia.Text:=ZQNoSub.FieldByName('colonia').AsString;
+  cp.Text:=ZQNoSub.FieldByName('cp').AsString;
+  ciudad.Text:=ZQNoSub.FieldByName('ciudad').AsString;
+  atenciona.Text:=ZQNoSub.FieldByName('titular').AsString;
+  email.Text:=ZQnoSub.FieldByName('email').AsString;
+  ZQColonia.Close;
+  ZQColonia.SQL.Clear;
+  ZQColonia.SQL.Add('Select Descripcion from c_cp where cp='+cp.Text);
+  ZQColonia.ExecSQL;
+  ZQColonia.Open;
+
+
+
+
+end;
+
+procedure TFNueva_Subscripcion.TelefonoKeyPress(Sender: TObject; var Key: Char);
+begin
+  {Revisamos que en el campo telefono no se introduscan letras}
+if ( StrScan('0123456789,-'+chr(7)+chr(8), Key) = nil ) then
+   begin
+     Key := #0;
+     beep;
+   end;
+end;
+
+procedure TFNueva_Subscripcion.AsignarClick(Sender: TObject);
+begin
+   {para poder ordenar o agregar datos de la ruta en edificios primero insertamos los datos de la subscripcion en la BD}
+  {Verificamos que los campos no vaya vacios}
+  if NoSubscriptor.Text = '' then
+   begin
+     ShowMessage('El numero de subscriptor no puede estar vacio');
+   end;
+  if NoSubscripcion.Text = '' then
+   begin
+     ShowMessage('El número de subscripción no puede estar vacio');
+   end;
+  if Combo_tiposub.KeyValue = NULL then
+   begin
+     ShowMessage('Seleccione el tipo de subscripción');
+   end;
+  if EnEdificio.Checked = TRUE then
+   begin
+      if combo_edificio.KeyValue = 0 then
+       Begin
+        ShowMessage('Seleccione el edificio de entrega');
+       End;
+   end;
+  if atenciona.Text = '' then
+   begin
+     ShowMessage('Indique en atención a quien estará la subscripción');
+   end;
+  if telefono.Text = '' then
+   begin
+     ShowMessage('Indique el teléfono del subscriptor, sino tiene introduzca un 0 ');
+   end;
+       if application.MessageBox (pchar('Esta accion dara de alta la subscripción, ¿desea continuar?'), pchar('Confirmar alta'), (MB_YESNO + MB_ICONQUESTION)) = IDYES then
+           begin
+            if ((NoSubscriptor.Text <> '') AND (NoSubscripcion.Text <> '') AND (Combo_tiposub.KeyValue <> NULL) AND (atenciona.Text <> '') AND (telefono.Text <> '') AND (combo_edificio.KeyValue <> NULL)) then
+              begin
+              {Asignamos las variables para pasarlas entre formularios
+               Callepublic:=calle.Text;
+               Coloniapublic:=colonia.text;
+               CPpublic:=cp.Text;
+               Ciudadpublic:= ciudad.Text;
+               Descripcionpublic:= descripcion.Text;   }
+
+              {insertamos los datos de la subscripcion en t_subscripciones}
+              numerodeedificio := FloatToStr(combo_edificio.KeyValue);
+              numerodesubscripcion := NoSubscripcion.Text;
+              ZQAlta_subscripcion.Close;
+              ZQAlta_subscripcion.SQL.Clear;
+              ZQAlta_subscripcion.SQL.Add('Insert into t_subscripcion (NoSubscriptor,AtencionA,Edificio,Fecha_alta,Fecha_inicio,fecha_fin,telefono,Tipo_Subscripcion,Costo,formadepago) VALUES ('+Nosubscriptor.Text+',"'+AtencionA.Text+'",'+FloatToStr(combo_edificio.KeyValue)+',"'+fecha_alta.Text+'","'+DateToStr(fecha_inicio.Date)+'","'+DateToStr(fecha_fin.Date)+'","'+telefono.Text+'",'+FloatToStr(combo_tiposub.KeyValue)+','+costo.text+',"'+formapago.Text+'")');
+              ZQAlta_subscripcion.ExecSQL;
+              ZQAlta_subscripcion.Close;
+              ZQAlta_subscripcion.SQL.Clear;
+              ZQAlta_subscripcion.SQL.Add('Insert into t_descripcion_rutas (no_ruta,Orden_en_el_reparto,no_de_subscripcion,calle,colonia,cp,ciudad,descripcion_domicilio,ruta) Values');
+              ZQAlta_subscripcion.SQL.Add('(0,0,'+nosubscripcion.Text+',"'+calle.Text+'","'+colonia.Text+'",'+cp.Text+',"'+ciudad.Text+'","'+descripcion.Text+'",'+FloatToStr(ruta.KeyValue)+')');
+              ZQAlta_subscripcion.ExecSQL;
+              {abrir formulario para asigancion de rutas}
+              //FAsignarARutaMetro.Enabled := False;
+              //FAsignarARutaMetro := TFAsignarARutaMetro.Create(Self);
+              //FAsignarARutaMetro.ShowModal;
+              areas.Enabled:=FALSE;
+              asignar.Enabled:=FALSE;
+              ShowMessage('La subscripcion fue dada de alta correctamente');
+              end
+              else begin
+                 ShowMessage('Error, Verifique que no falten datos.');
+              end;
+           end
+
+  {ZQAlta_subscripcion.Close;
+  ZQAlta_subscripcion.SQL.Clear;
+  ZQAlta_subscripcion.SQL.Add('Insert into t_subscripcion (NoSubscriptor,AtencionA,Edificio,Ruta,Fecha_alta,Fecha_inicio,Fecha_fin,telefono,Observaciones,Tipo_Subscripcion,Inconsistencias,costo) Values ("'+Nosubscriptor.Text+'","'+AtencionA.Text+'",'+FloatToStr(combo_edificio.KeyValue)+','+FloatToStr(combo_ruta.KeyValue)+',"'+Fecha_alta.Text+'",'+DateToStr(Fecha_inicio.Date)+','+DateToStr(fecha_fin.Date)+',"'+telefono.Text+'","'+Observaciones.Text+'",'+FloatToStr(combo_tiposub.KeyValue)+',"'+Inconsistencias.Text+'",'+(Costo.Text)+')');
+  ZQAlta_subscripcion.ExecSQL;}
+
+
+end;
+
+procedure TFNueva_Subscripcion.combo_tiposubClick(Sender: TObject);
+begin
+
+  {Actualizamos el costo y la duracion segun el tipo de susbcripcion}
+  ZQRCosto.SQL.Clear;
+  ZQRCosto.Close;
+  ZQRCosto.SQL.Add('Select costo,duracion from c_tipo_de_subscripcion where id_subscripcion = '+FloatToStr(combo_tiposub.KeyValue));
+  ZQRCosto.ExecSQL;
+  ZQRCosto.Open;
+  Costo.Text := ZQRCosto.FieldByName('costo').AsString;
+  duracionsubs := ZQRCosto.FieldByName('Duracion').AsInteger;
+  Fecha_fin.Date := Fecha_inicio.Date + duracionsubs;
+  {ShowMessage('El costo es: '+ZQRCosto.ParamByName('costo').AsString);}
+  end;
+
+procedure TFNueva_Subscripcion.cpExit(Sender: TObject);
+begin
+   ZQNosub.Close;
+   ZQNoSub.SQL.Clear;
+   ZQNoSub.SQL.Add('Select cp,municipio,descripcion from c_cp where cp ='+cp.Text);
+   ZQNoSub.ExecSQL;
+   ZQNoSub.Open;
+   if ZQNoSub.RecordCount =0 then
+      begin
+       ShowMessage('El CP no existe en la BD por favor verifique');
+      end
+   else begin
+   ciudad.Text:= ZQNoSub.FieldByName('Municipio').AsString;
+   ZQColonia.Close;
+   ZQColonia.SQL.Clear;
+   ZQColonia.SQL.Add('Select Descripcion from c_cp where cp='+cp.Text);
+   ZQColonia.ExecSQL;
+   ZQColonia.Open;
+
+
+   end;
+
+end;
+
+procedure TFNueva_Subscripcion.cpKeyPress(Sender: TObject; var Key: Char);
+begin
+if ( StrScan('0123456789'+chr(7)+chr(8), Key) = nil ) then
+   begin
+     Key := #0;
+     beep;
+   end;
+end;
+
+end.
