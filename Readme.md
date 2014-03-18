@@ -11,6 +11,7 @@ Estructura de carpetas
   * code - Project's Source code
   * docs - Aquí hay referencias para los trabajos a desarrollar.
   * public - Utilizado para la entrega de proyectos o trabajos finales.
+  * split - public document Pre-integration
  
 
 Forma de trabajo
