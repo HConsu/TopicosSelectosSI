@@ -1,0 +1,108 @@
+
+# Create a new repository on the command line
+# touch README.md
+
+$ git init
+$ git add README.md
+$ git commit -m "first commit"
+$ git remote add origin https://github.com/adalbertovargas/Vacantes.webapp.git
+$ git push -u origin master
+
+# Push an existing repository from the command line
+$ git remote add origin https://github.com/adalbertovargas/Vacantes.webapp.git
+$ git push -u origin master
+
+# git push Hi-Speed
+$ git add -A
+
+# Discar changes in working dir
+$ git checkout -- <dir/file.ext>
+
+# Create the branch on your local machine:
+$ git branch <name_of_your_new_branch>
+
+# Push the branch on github :
+$ git push origin <name_of_your_new_branch>
+
+# Check out this branch on your local machine to begin working on it:
+$ git fetch && git checkout dev
+
+# HEAD is the las commit made
+
+
+# Switch to master
+$ git checkout master
+
+# Pull changes from the origin remote master and merge to local branched
+$ git pull origin master
+
+# Listando tus etiquetas
+$ git tag
+v0.1
+v1.3
+
+# Buscar etiquetas de acuerdo a un patrón en particular
+$ git tag -l 'v1.4.2.*'
+v1.4.2.1
+v1.4.2.2
+v1.4.2.3
+v1.4.2.4
+
+# Crear tiquetas anotadas
+$ git tag -a v1.4 -m 'my version 1.4'
+$ git tag
+v0.1
+v1.3
+v1.4
+
+# Si ejecutas git show en esa etiqueta, puedes ver la firma GPG adjunta a ella
+$ git show v1.5
+tag v1.5
+Tagger: Scott Chacon <schacon@gee-mail.com>
+Date:   Mon Feb 9 15:22:20 2009 -0800
+
+
+# Delete the v0.4 tag locally: 
+$ git tag -d v0.4
+
+# Delete the v0.4 tag on GitHub (which removes its download link):
+$ git push origin :v0.4
+
+# Add a new tag for the newest stable release: 
+$ git tag -a v0.5 -m "Version 0.5 Stable"
+
+# Push the latest tag to GitHub (two dashes): 
+$git push --tags
+
+# Update local
+$ git add .
+$ git add -u
+
+# Strong reset
+$ git reset --hard 0d1d7fc32
+
+# To delete a local branch
+$ git branch -d <the_local_branch>
+
+# Delete remote branch
+$git push origin --delete <branchName>
+
+# Merge from hotfix to master
+$ git checkout master
+$ git merge hotfix
+
+
+# Default git init
+$ echo "# This is my README" >> README.md
+$ git add README.md
+$ git commit -m "First commit. Adding a README."
+$ git push -u origin master
+
+
+# To revert to previous commit, ignoring any changes
+$ git reset --hard HEAD
+# where HEAD is the last commit in your current branch
+
+----------
+
+ADL
