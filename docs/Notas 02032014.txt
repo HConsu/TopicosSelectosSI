@@ -1,0 +1,7 @@
+Qué onda adal, oye, lo que faltaba era esto:
+
+  * Modificar el diagrama de bloques (lo tienes que hacer respecto a los procesos que se van a automatizar con el sistema)
+  * Modificar el diagrama entidad-relación (según el, estaba muy simple)
+  * Modificar el diagrama de niveles.. me parece que son romboides en vez de rectangulos o algo así
+  
+de los demás creo que está bien.. o al menos eso es lo que recuerdo!
