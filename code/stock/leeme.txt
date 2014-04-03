@@ -1,0 +1,1 @@
+Abrir archivo index.html, sólo es Front, no hay scripts backend
